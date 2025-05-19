@@ -16,15 +16,6 @@ function MessageContainer() {
         <div className='h-full overflow-y-auto p-3'>
             <Message />
             <Message />
-            <Message />
-            <Message />
-            <Message />
-            <Message />
-            <Message />
-            <Message />
-            <Message />
-            
-
         </div>
          
         <div className='w-full p-3 flex gap-2'>

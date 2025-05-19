@@ -19,11 +19,10 @@ function UserSidebar() {
         <div className='h-full overflow-y-auto px-3'>
             <User />
             <User />
-            <User />
             
         </div>
 
-        <div className='flex items-center justify-between p-3'>
+        <div className='flex items-center justify-between p-3 border-t border-t-white/10'>
             <div class="avatar">
               <div class="w-10 rounded-4xl">
                   <img src="https://img.daisyui.com/images/profile/demo/batperson@192.webp" />
