@@ -3,6 +3,7 @@
 import User from '../models/userModel.js'
 import { asyncHandler } from '../utilities/asyncHandlerUtility.js';
 import { errorHandler } from '../utilities/errorHandlerUtility.js'
+import bcrypt from 'bcryptjs'
 
 export const register = asyncHandler(async (req, res, next) => {
     const { fullName, username, password, gender} = req.body;
@@ -16,11 +17,18 @@ export const register = asyncHandler(async (req, res, next) => {
       return next(new errorHandler('User already exists', 400))
     }  
 
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const profileType = gender === 'male'? 'boy' : 'girl';
+    const profile = `https://avatar.iran.liara.run/public/${profileType}?username=${username}`
+
     const newUser = await User.create({ 
       fullName, 
       username, 
-      password, 
+      password: hashedPassword, 
       gender,
+      profile,
     });
 
     res.status(200).json({
@@ -32,9 +40,33 @@ export const register = asyncHandler(async (req, res, next) => {
     res.send('hello regester');
   })
 
-export const login = (req, res, next) => {
-  res.send("hello i am login route 1");
-};
+
+export const login = asyncHandler(async (req, res, next) => {
+    const { username, password} = req.body;
+    
+    if(!username ||!password) {
+      return next(new errorHandler("Please Enter a valid username or password", 400))
+    };
+
+    const user = await User.findOne({username});
+    if(!user){
+      return next(new errorHandler('Please Enter a valid username or password', 400))
+    }  
+
+
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if(!isValidPassword){
+      return next(new errorHandler('Please Enter a valid username or password', 400))
+    }
+
+
+    res.status(200).json({
+      success: true,
+      responseData :{
+        user
+      }
+    })
+  })
 
 
 
