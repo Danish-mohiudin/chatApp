@@ -1,17 +1,40 @@
+// import { use } from 'react';
+// import { response } from 'express';
 import User from '../models/userModel.js'
-export const register = async (req, res, next) => {
-  try {
-    const { fullName, username, password, gender, profile } = req.body;
-    const user = new User({ fullName, username, password, gender, profile });
-    await user.save();
-    res.status(201).json(user);
+import { asyncHandler } from '../utilities/asyncHandlerUtility.js';
+import { errorHandler } from '../utilities/errorHandlerUtility.js'
+
+export const register = asyncHandler(async (req, res, next) => {
+    const { fullName, username, password, gender} = req.body;
     
-  } catch (error) {
-    
-  }
-}
+    if(!fullName || !username ||!password ||!gender) {
+      return next(new errorHandler("All fields are required", 400))
+    };
+
+    const user = await User.findOne({username});
+    if(user){
+      return next(new errorHandler('User already exists', 400))
+    }  
+
+    const newUser = await User.create({ 
+      fullName, 
+      username, 
+      password, 
+      gender,
+    });
+
+    res.status(200).json({
+      success: true,
+      responseData :{
+        newUser
+      }
+    })
+    res.send('hello regester');
+  })
 
 export const login = (req, res, next) => {
-  res.send("hello i am login route");
+  res.send("hello i am login route 1");
 };
+
+
 

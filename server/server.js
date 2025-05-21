@@ -1,18 +1,21 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import express from 'express';
-import { connectDb } from './db/dbConnectionOne.js';
+import userRoute from './routes/userRoute.js'
+import { connectDb } from './db/dbConnectionOne.js'
 connectDb();
 const app = express();
 
+app.use(express.json());
 const PORT = process.env.PORT || 5000;
 
-// routes 
+// routes
+app.use('/api/user', userRoute);
 
-import userRoute from './routes/userRoute.js'
-app.use('/user', userRoute)   // This line mounts the entire router userRoute at the path /api/v1/user, or we can say that it is creating the actual route
+// middlewares 
+import { errorMiddleware } from './middlewares/errorMiddleware.js'
+app.use(errorMiddleware);
 
 app.listen(PORT, ()=>{
-    console.log(`your server lisening at port ${PORT}`);
-})
-    
+    console.log(`$erver is running on port ${PORT}`)
+});
