@@ -2,11 +2,13 @@ import dotenv from 'dotenv';
 dotenv.config();
 import express from 'express';
 import userRoute from './routes/userRoute.js'
+import coolieParser from 'cookie-parser'
 import { connectDb } from './db/dbConnectionOne.js'
 connectDb();
 const app = express();
 
 app.use(express.json());
+app.use(coolieParser());
 app.use(express.urlencoded({ extended: true }));
 const PORT = process.env.PORT || 5000;
 
