@@ -1,7 +1,6 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import express from 'express';
-import userRoute from './routes/userRoute.js'
 import coolieParser from 'cookie-parser'
 import { connectDb } from './db/dbConnectionOne.js'
 connectDb();
@@ -13,7 +12,10 @@ app.use(express.urlencoded({ extended: true }));
 const PORT = process.env.PORT || 5000;
 
 // routes
+import userRoute from './routes/userRoute.js'
+import messageRoute from './routes/messageRoute.js'
 app.use('/api/user', userRoute);
+app.use('/api/message', messageRoute);
 
 // middlewares 
 import { errorMiddleware } from './middlewares/errorMiddleware.js'

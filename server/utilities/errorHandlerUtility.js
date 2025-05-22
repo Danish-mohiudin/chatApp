@@ -2,7 +2,8 @@ class ErrorHandler extends Error{        // creating custom error class called E
     constructor(message, statusCode){ 
         super(message);
         this.statusCode = statusCode;
-        Error.captureStackTrace(this, this.constructor)
+        Error.captureStackTrace(this, this.constructor) // without this line, the error repooort would include unnecessary techinical details like where the error handler class itself is defined. that is not very helpful when you are trying to debug .
+        // with error.captureStackTrace, you are saying skip all setup details and just show me where the error occurred.
     }
 }
 
