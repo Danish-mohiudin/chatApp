@@ -1,10 +1,11 @@
 import express from 'express'
 import { isAuthenticated } from '../middlewares/authMiddleware.js'
-import { sendMessage } from '../controllers/messageController.js';
+import { getMessages, sendMessage } from '../controllers/messageController.js';
 
 
 const router = express.Router();
-router.post('/send',isAuthenticated, sendMessage);  
+router.post('/send/:recieverId',isAuthenticated, sendMessage);  
+router.get('/get-messages/:otherParticipantId',isAuthenticated, getMessages);  
 
 
 export default router;

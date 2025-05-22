@@ -8,18 +8,18 @@ export const sendMessage = asyncHandler(async (req, res, next) => {
     const recieverId = req.params.recieverId;
     const message = req.body.message;
 
-    if(!message || !recieverId || !senderId) {
+    if(!senderId || !recieverId || !message) {
         return next(new errorHandler("Please provide valid message, receiverId and senderId", 400));
     }
     
-    const conversation = await Conversation.findOne(
+    let conversation = await Conversation.findOne(
         { participants: { $all: [senderId, recieverId] } },  // $all means both senderId and receiverId should be present in the participants array
     );
 
     if(!conversation) {
         conversation = await Conversation.create({
             participants: [senderId, recieverId],
-        })
+        });
     }
 
     const newMessage = await Message.create({
@@ -40,6 +40,28 @@ export const sendMessage = asyncHandler(async (req, res, next) => {
     .json({
       success: true,
       responseData : newMessage,
+    });
+    res.send('hello regester');
+  })
+
+export const getMessages = asyncHandler(async (req, res, next) => {
+    const myId = req.user._id;
+    const otherParticipantId = req.params.recieverId;
+
+    if(!myId || !otherParticipantId ) {
+        return next(new errorHandler("Please provide valid message, receiverId and senderId", 400));
+    }
+    
+    let conversation = await Conversation.findOne(
+        { participants: { $all: [myId, otherParticipantId] } },  // $all means both senderId and receiverId should be present in the participants array
+    ).populate('messages')
+    
+
+    res
+    .status(200)
+    .json({
+      success: true,
+      responseData : conversation,
     });
     res.send('hello regester');
   })
