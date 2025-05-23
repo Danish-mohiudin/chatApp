@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
 import { FaUser,  FaKey  } from "react-icons/fa";
 import { Link } from 'react-router-dom'
+import {toast} from 'react-hot-toast'
+import { useDispatch } from 'react-redux'
+import { loginUserThunk } from '../../store/slice/user/userThunk';
 
 function Login() {
 
+  const dispatch = useDispatch();
 
   const [loginData, setLoginData] = useState({
     username : '',
@@ -22,6 +26,12 @@ function Login() {
    // [key]: value → extracts the value from the variable key and uses it as the property
    // ✅ [e.target.name] matches the key name with the input's name attribute
   console.log(loginData); // will display username and password
+
+  const handleLogin = async () => {
+    console.log("login clicked")
+    toast.success('Logged in successfully!', { duration: 2000 });
+    await dispatch(loginUserThunk(loginData))
+  }
   
 
 
@@ -58,7 +68,7 @@ function Login() {
         />
        </label>
 
-       <button className="btn btn-primary mx-[40%]">Login</button>
+       <button onClick={handleLogin} className="btn btn-primary mx-[40%]">Login</button>
 
        <p>
         Don`t have an account? &nbsp;
