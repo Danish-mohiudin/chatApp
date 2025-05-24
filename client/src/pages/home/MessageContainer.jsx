@@ -20,9 +20,9 @@ function MessageContainer() {
          
         <div className='w-full p-3 flex gap-2'>
             <input type="text" placeholder="type here..." 
-             class="input input-primary" />
+             className="input input-primary" />
 
-            <button class="btn btn-square btn-outline btn-primary">
+            <button className="btn btn-square btn-outline btn-primary">
              <IoSend />
 </button>
         </div>

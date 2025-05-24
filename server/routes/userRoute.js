@@ -4,6 +4,7 @@ import { isAuthenticated } from '../middlewares/authMiddleware.js'
 
 
 const router = express.Router();
+
 router.post('/register', register);  // here simply we are difining the route method (get,post etc)
 router.post('/login', login);
 router.post('/logout', isAuthenticated, logout);

@@ -1,21 +1,73 @@
 // the thunk is just a normal fuction used to handle api call etc or used to handle async operations 
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import {toast} from 'react-hot-toast';
-import axiosInstance from '../../../../components/axiosInstance';
+import toast from 'react-hot-toast';
+import { axiosInstance } from '../../../../components/axiosInstance';
 
-export const loginUserThunk = createAsyncThunk("users/fetchId", async({username, password},
-    {rejectWithValue}
-)=>{
+export const loginUserThunk = createAsyncThunk("user/login", async(
+    {username, password},{rejectWithValue} )=>{// rejectWithValue is a helper that lets you send a custom error object if the request fails.
     try {
-        const response = await axiosInstance.post('/api/v1/user/login', {
+        const response = await axiosInstance.post('/user/login', {
             username,
             password
         });
+        toast.success("login successfull");
         return response.data
     } catch (error) {   
-        //const errorOutput = error
+        console.error(error?.response?.data?.errMessage);
+        const errorOutput = error?.response?.data?.errMessage
+        toast.error(errorOutput);
+        return  rejectWithValue(errorOutput);
+    }
+    
+});
+
+
+export const registerUserThunk = createAsyncThunk(
+    "user/signup", async({fullName, username, password, gender},{rejectWithValue}) => {
+    try {
+        const response = await axiosInstance.post('/user/register', {
+            fullName,
+            username,
+            password,
+            gender,
+        });
+        toast.success("Accout Created Successfully");
+        return response.data
+    } catch (error) {   
+        console.error(error?.response?.data?.errMessage);
+        const errorOutput = error?.response?.data?.errMessage
+        toast.error(errorOutput);
+        return  rejectWithValue(errorOutput);
+    }
+    
+});
+
+export const logoutUserThunk = createAsyncThunk(
+    "user/logout", async(_,{rejectWithValue}) => {
+        
+    try {
+        const response = await axiosInstance.post('/user/logout');
+        toast.success("Logged Out Successfully");
+        return response.data
+    } catch (error) {   
+        console.error(error?.response?.data?.errMessage);
+        const errorOutput = error?.response?.data?.errMessage
+        toast.error(errorOutput);
+        return  rejectWithValue(errorOutput);
+    }
+    
+});
+
+export const getUserProfileThunk = createAsyncThunk(
+    "user/getProfile", async(_,{rejectWithValue}) => {
+    try {
+        const response = await axiosInstance.get('/user/get-profile');
+        return response.data
+    } catch (error) {   
+        console.error(error?.response?.data?.errMessage);
+        const errorOutput = error?.response?.data?.errMessage
         //toast.error(errorOutput);
-        //return  rejectWithValue(errorOutput);
+        return  rejectWithValue(errorOutput);
     }
     
 });

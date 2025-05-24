@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { FaUser,  FaKey  } from "react-icons/fa";
-import { Link } from 'react-router-dom'
+import { Link ,useNavigate} from 'react-router-dom'
 import {toast} from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { loginUserThunk } from '../../store/slice/user/userThunk';
 
 function Login() {
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [loginData, setLoginData] = useState({
@@ -30,9 +30,11 @@ function Login() {
   const handleLogin = async () => {
     console.log("login clicked")
     toast.success('Logged in successfully!', { duration: 2000 });
-    await dispatch(loginUserThunk(loginData))
+    const response = await dispatch(loginUserThunk(loginData))
+    if(response?.payload?.success){
+      navigate(`/`)
+    }
   }
-  
 
 
 

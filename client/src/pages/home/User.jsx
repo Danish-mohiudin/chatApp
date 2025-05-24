@@ -3,8 +3,8 @@ import React from 'react'
 function User() {
   return (
     <div className='flex gap-5 items-center'>
-        <div class="avatar avatar-online">
-          <div class="w-12 rounded-full">
+        <div className="avatar avatar-online">
+          <div className="w-12 rounded-full">
             <img src="https://img.daisyui.com/images/profile/demo/gordon@192.webp" />
           </div>
         </div>
