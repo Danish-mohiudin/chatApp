@@ -1,14 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FaSearch } from "react-icons/fa";
 import User from './User';
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import { logoutUserThunk } from '../../store/slice/user/userThunk';
 
 function UserSidebar() {
   const dispatch = useDispatch()
+  const { otherUsers } = useSelector((state) => state.userReducer);
 
   const handleLogout = async () => {
     await dispatch(logoutUserThunk())
+
+    // useEffect(()=>{
+    //   (async()=>{
+    //     await dispatch(getOtherUsersThunk());
+    //   })();
+    // },[])
+
+
   }
   return (
     <div className='max-w-[20rem] w-full h-screen flex flex-col border-r border-r-white/10'>
@@ -23,10 +32,12 @@ function UserSidebar() {
             </label>
         </div>
 
-        <div className='h-full overflow-y-auto px-3'>
-            <User />
-            <User />
-            
+        <div className='h-full overflow-y-auto px-3 flex flex-col gap-2'>
+          
+            {otherUsers?.map(userDetails =>{
+              return <User key={userDetails._id} userDetails={userDetails}/>
+            })}
+  
         </div>
 
         <div className='flex items-center justify-between p-3 border-t border-t-white/10'>

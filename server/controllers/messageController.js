@@ -41,12 +41,11 @@ export const sendMessage = asyncHandler(async (req, res, next) => {
       success: true,
       responseData : newMessage,
     });
-    res.send('hello regester');
   })
 
 export const getMessages = asyncHandler(async (req, res, next) => {
     const myId = req.user._id;
-    const otherParticipantId = req.params.recieverId;
+    const otherParticipantId = req.params.otherParticipantId;
 
     if(!myId || !otherParticipantId ) {
         return next(new errorHandler("Please provide valid message, receiverId and senderId", 400));
@@ -63,5 +62,4 @@ export const getMessages = asyncHandler(async (req, res, next) => {
       success: true,
       responseData : conversation,
     });
-    res.send('hello regester');
   })

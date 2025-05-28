@@ -1,18 +1,23 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaUser,  FaKey  } from "react-icons/fa";
 import { Link ,useNavigate} from 'react-router-dom'
 import {toast} from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch ,useSelector} from 'react-redux'
 import { loginUserThunk } from '../../store/slice/user/userThunk';
 
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { isAuthenticated } = useSelector((state) => state.userReducer);
 
   const [loginData, setLoginData] = useState({
     username : '',
     password : ''
   })
+
+  useEffect(()=>{
+    if(isAuthenticated) navigate('/')
+  },[isAuthenticated])
 
   const handleInputChange =(e) => {
     // console.log(e.target.name)
@@ -28,7 +33,6 @@ function Login() {
   console.log(loginData); // will display username and password
 
   const handleLogin = async () => {
-    console.log("login clicked")
     toast.success('Logged in successfully!', { duration: 2000 });
     const response = await dispatch(loginUserThunk(loginData))
     if(response?.payload?.success){
