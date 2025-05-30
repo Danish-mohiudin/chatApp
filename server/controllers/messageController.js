@@ -2,6 +2,7 @@ import Message from '../models/messageModel.js'
 import Conversation from '../models/conversarionModel.js'
 import { asyncHandler } from '../utilities/asyncHandlerUtility.js';
 import { errorHandler } from '../utilities/errorHandlerUtility.js'
+import { getSocketId, io } from '../socket/socket.js' // Import socket.io-client'
 
 export const sendMessage = asyncHandler(async (req, res, next) => {
     const senderId = req.user._id;
@@ -34,6 +35,9 @@ export const sendMessage = asyncHandler(async (req, res, next) => {
     }
 
     //socket.io broadcasting code here
+    const socketId  = getSocketId(recieverId) 
+    io.to(socketId).emit('newMessage', newMessage);
+
 
     res
     .status(200)

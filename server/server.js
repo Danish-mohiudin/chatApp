@@ -1,11 +1,10 @@
-import dotenv from 'dotenv';
-dotenv.config();
+import {server, app} from './socket/socket.js';
 import express from 'express';
-import coolieParser from 'cookie-parser'
-import { connectDb } from './db/dbConnectionOne.js'
-import cors from 'cors'
+import coolieParser from 'cookie-parser';
+import { connectDb } from './db/dbConnectionOne.js';
+import cors from 'cors';
+
 connectDb();
-const app = express();
 
 app.use(cors({
     origin:[process.env.CLIENT_URL],
@@ -26,6 +25,6 @@ app.use('/api/v1/message', messageRoute); // Every route in messageRoute.js will
 import { errorMiddleware } from './middlewares/errorMiddleware.js'
 app.use(errorMiddleware);
 
-app.listen(PORT, ()=>{
+server.listen(PORT, ()=>{
     console.log(`$erver is running on port ${PORT}`)
 });

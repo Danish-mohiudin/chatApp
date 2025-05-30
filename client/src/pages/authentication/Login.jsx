@@ -20,8 +20,6 @@ function Login() {
   },[isAuthenticated])
 
   const handleInputChange =(e) => {
-    // console.log(e.target.name)
-    // console.log(e.target.value)
     setLoginData((prev)=>({
       ...prev,
       [e.target.name]: e.target.value
@@ -30,7 +28,7 @@ function Login() {
    // key: value → creates a property literally named "key"
    // [key]: value → extracts the value from the variable key and uses it as the property
    // ✅ [e.target.name] matches the key name with the input's name attribute
-  console.log(loginData); // will display username and password
+  // console.log(loginData); // will display username and password
 
   const handleLogin = async () => {
     toast.success('Logged in successfully!', { duration: 2000 });

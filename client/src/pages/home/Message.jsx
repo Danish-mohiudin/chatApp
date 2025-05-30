@@ -1,17 +1,36 @@
-import React from "react";
+import {useEffect} from "react";
+import { useRef } from "react";
 import { useSelector } from "react-redux";
 
 function Message({messageDetails}) {
 
-  const userProfile = useSelector((state) => state.userReducer);
+  const  messageREf = useRef(null);
+  const {userProfile, seletedUser} = useSelector((state) => state.userReducer);
+
+  useEffect(() => {
+    if(messageREf.current) {
+      messageREf.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messageDetails]);
+
   return (
     <>
-      <div className={`chat ${userProfile?._id === messageDetails?.senderId ? 'chat-end':'chat-start'}`}> 
+      <div 
+      ref={messageREf}
+      className={`chat ${
+        userProfile?._id === messageDetails?.senderId 
+          ? 'chat-start'
+          :'chat-end'
+          }`}> 
         <div className="chat-image avatar">
           <div className="w-10 rounded-full">
             <img
               alt="Tailwind CSS chat bubble component"
-              src="https://img.daisyui.com/images/profile/demo/kenobee@192.webp"
+              src={
+                userProfile?._id === messageDetails?.senderId 
+                  ? userProfile?.profile
+                  : seletedUser?.profile
+                }
             />
           </div>
         </div>

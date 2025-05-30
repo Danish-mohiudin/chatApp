@@ -7,7 +7,8 @@ function User({userDetails}) {
 
   const dispatch = useDispatch()
   const { selectedUser } = useSelector((state) => state.userReducer)
-  console.log(selectedUser);
+  const {onlineUsers} = useSelector((state) => state.userReducer)
+  const isUserOnline = onlineUsers?.includes(userDetails?._id)
   
 
   const handleUserClick = () => {
@@ -15,8 +16,9 @@ function User({userDetails}) {
   }
   return (
     <div onClick={handleUserClick} className={`flex gap-5 items-center hover:bg-gray-700 rounded-lg py-1 px-2 cursor-pointer
-    ${userDetails?._id === selectedUser?._id && 'bg-gray-700'}`}>
-        <div className="avatar avatar-online">
+    ${userDetails?._id === selectedUser?._id && 'bg-gray-700'}`}
+    >
+        <div className={`avatar ${isUserOnline && 'online'} `}>
           <div className="w-12 rounded-full">
             <img src={userDetails?.profile} />
           </div>
