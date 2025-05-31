@@ -41,7 +41,7 @@ const MessageContainer = () => {
             })}
           </div>
             {/* input field */}
-          <SendMessage /> input field
+          <SendMessage />
 
         </div>
       )}
