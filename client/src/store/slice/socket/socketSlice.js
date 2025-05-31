@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { act } from "react";
 import io from "socket.io-client";
 
 const initialState = {
@@ -15,7 +14,7 @@ export const socketSlice = createSlice({
       const socket = io(import.meta.env.VITE_DB_ORIGIN ,{   //It creates a new socket connection to your backend server using an environment variable (VITE_DB_ORIGIN).
         query: {
             userId : action.payload,
-        }
+        },
       }); 
       state.socket = socket;  //Then it stores the socket object in Redux state, so your app can use it later.
 
@@ -23,7 +22,7 @@ export const socketSlice = createSlice({
 
       setOnlineUsers: (state, action) => {
         state.onlineUsers = action.payload;
-      }
+      },
     },
 });
 

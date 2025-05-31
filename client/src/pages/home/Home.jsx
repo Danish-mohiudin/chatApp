@@ -7,11 +7,11 @@ import { setNewMessage } from '../../store/slice/message/messageSlice'
 const Home = () => {
 
   const {isAuthenticated, userProfile} = useSelector((state) => state.userReducer);
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(()=>{
     if(!isAuthenticated) return;
-    dispath(initializeSocket(userProfile?._id)); // create socket connection when user is authenticated
+    dispatch(initializeSocket(userProfile?._id)); // create socket connection when user is authenticated
   },[isAuthenticated])
 
 
@@ -20,10 +20,10 @@ const Home = () => {
   useEffect(()=>{
     if(!socket) return;
     socket.on("onlineUsers", (onlineUsers) => {
-        dispath(setOnlineUsers(onlineUsers));
+        dispatch(setOnlineUsers(onlineUsers));
       });
       socket.on("newMessage", (newMessage) => {
-        dispath(setNewMessage(newMessage));
+        dispatch(setNewMessage(newMessage));
       });
       return () => {
         socket.close(); // clean up when component unmounts

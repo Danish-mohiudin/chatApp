@@ -37,8 +37,6 @@ export const sendMessage = asyncHandler(async (req, res, next) => {
     //socket.io broadcasting code here
     const socketId  = getSocketId(recieverId) 
     io.to(socketId).emit('newMessage', newMessage);
-
-
     res
     .status(200)
     .json({

@@ -66,7 +66,7 @@ export const getUserProfileThunk = createAsyncThunk(
         console.error(error?.response?.data?.errMessage);
         const errorOutput = error?.response?.data?.errMessage
         //toast.error(errorOutput);
-        return  rejectWithValue(errorOutput);
+        return  rejectWithValue(errorOutput);   
     }
     
 });

@@ -1,19 +1,22 @@
 import React from 'react'
-import { use } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { setSelectedUser } from '../../store/slice/user/userSlice'
 
 function User({userDetails}) {
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { selectedUser } = useSelector((state) => state.userReducer)
   const {onlineUsers} = useSelector((state) => state.userReducer)
   const isUserOnline = onlineUsers?.includes(userDetails?._id)
+  //console.log(`${userDetails} userDetails`);
+  
   
 
   const handleUserClick = () => {
     dispatch(setSelectedUser(userDetails))
-  }
+  };
+
+  // selected user
   return (
     <div onClick={handleUserClick} className={`flex gap-5 items-center hover:bg-gray-700 rounded-lg py-1 px-2 cursor-pointer
     ${userDetails?._id === selectedUser?._id && 'bg-gray-700'}`}

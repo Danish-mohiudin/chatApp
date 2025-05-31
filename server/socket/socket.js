@@ -1,9 +1,10 @@
 import dotenv from 'dotenv';
 dotenv.config();
+
 import {Server} from 'socket.io';
 import http from 'http';
 import express from 'express';
-import { log } from 'console';
+
 
 const app = express();
 const server = http.createServer(app);
@@ -13,7 +14,9 @@ const io = new Server(server,{
     }
 });
 
-const userSocketMap = {}
+const userSocketMap = {
+    // userId : socketId,
+}
 
 io.on('connection',(socket)=>{
     const userId = socket.handshake.query.userId;
@@ -22,12 +25,14 @@ io.on('connection',(socket)=>{
     userSocketMap[userId] = socket.id; // setting key inside userSocketMap with userId as key and socket.id as value
 
     io.emit('onlineUsers',Object.keys(userSocketMap)); // broadcasting online users to all clients
-
+   
     socket.on('disconnect',()=>{
         delete userSocketMap[userId];
         io.emit('onlineUsers',Object.keys(userSocketMap));
-    })
-})
+    });
+
+    
+});
 
 const getSocketId = (userId) => {
     return userSocketMap[userId];

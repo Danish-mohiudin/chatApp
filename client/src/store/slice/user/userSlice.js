@@ -6,9 +6,8 @@ const initialState = {
     screenLoading: true,
     userProfile: null,
     otherUsers: null,
-    setSelectedUser: JSON.parse(localStorage.getItem("selectedUser")),
+    selectedUser: JSON.parse(localStorage.getItem("selectedUser")),
     buttonLoading: false,
-    selectedUser: null,
 }
 
 export const userSlice = createSlice({

@@ -6,7 +6,7 @@ import { errorHandler } from '../utilities/errorHandlerUtility.js'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
-export const register = asyncHandler(async (req, res, next) => {
+export const register = asyncHandler(async (req, res, next) => { // will recieva data from registerUserThunk 
     const { fullName, username, password, gender} = req.body;
     
     if(!fullName || !username ||!password ||!gender) {
@@ -22,18 +22,18 @@ export const register = asyncHandler(async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const profileType = gender === 'male'? 'boy' : 'girl';
-    const profile = `https://avatar.iran.liara.run/public/${profileType}?username=${username}`
+    const profilePicture = `https://avatar.iran.liara.run/public/${profileType}?username=${username}`
 
     const newUser = await User.create({ 
       fullName, 
       username, 
       password: hashedPassword, 
       gender,
-      profile,
+      profilePicture,
     });
 
     const tokenData = {
-      _id: newUser?._id,
+      _id: newUser?._id, // Optional chaining ensures no crash if newUser is undefined
     };
     const token = jwt.sign(tokenData, process.env.jwt_SECRET, { 
       expiresIn: process.env.jwt_EXPIRES
@@ -51,7 +51,7 @@ export const register = asyncHandler(async (req, res, next) => {
     })
     .json({
       success: true,
-      responseData :{
+      responseData :{   // the response data is the object that gets sent to the frontend when a new user is successfully registered 
         newUser,
         token,
       },
@@ -66,7 +66,7 @@ export const login = asyncHandler(async (req, res, next) => {
       return next(new errorHandler("Please Enter a valid username or password", 400))
     };
 
-    const user = await User.findOne({username});
+    const user = await User.findOne({username}); // username:username
     if(!user){
       return next(new errorHandler('Please Enter a valid username or password', 400)
      );
@@ -92,7 +92,7 @@ export const login = asyncHandler(async (req, res, next) => {
     .cookie("token",token, { 
       expires: new Date(
         Date.now() + process.env.COOKIE_EXPIRES * 24 * 60 * 60 * 1000
-      ),
+      ), 
       httpOnly: true,
       secure: true,
       sameSite: 'None',
@@ -109,13 +109,13 @@ export const login = asyncHandler(async (req, res, next) => {
 
 
 export const getProfile = asyncHandler(async (req, res, next) => {
-    const userId = req.user._id;
+    const userId = req.user._id; 
 
     const profile = await User.findById(userId);
     
     res.status(200).json({
       success: true,
-      responseData : profile,
+      responseData : profile,  
     });
     
   })

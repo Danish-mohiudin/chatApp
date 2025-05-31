@@ -40,8 +40,8 @@ const MessageContainer = () => {
               );
             })}
           </div>
-
-          <SendMessage />
+            {/* input field */}
+          <SendMessage /> input field
 
         </div>
       )}
