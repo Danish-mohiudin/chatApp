@@ -1,5 +1,6 @@
 import MessageContainer from './MessageContainer'
 import UserSidebar from './UserSidebar'
+//import ProfilePopUp from './ProfilePopUp'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { initializeSocket , setOnlineUsers} from '../../store/slice/socket/socketSlice'
@@ -33,6 +34,7 @@ const Home = () => {
 
   return (
     <div className='flex '>
+      {/* <ProfilePopUp /> */}
       <UserSidebar />
       <MessageContainer />
     </div>

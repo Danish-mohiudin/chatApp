@@ -7,13 +7,14 @@ import {
   logoutUserThunk,
 } from "../../store/slice/user/userThunk";
 import { useState } from "react";
+import ProfilePopUp from './ProfilePopUp';
 
 function UserSidebar() {
   const [searchValue, setSearchValue] = useState("");
   const dispatch = useDispatch();
   const [users, setUsers] = useState([]);
   const { otherUsers, userProfile } = useSelector((state) => state.userReducer);
-  console.log(userProfile);
+  //console.log(userProfile);
 
   const handleLogout = async () => {
     await dispatch(logoutUserThunk());
@@ -41,7 +42,7 @@ function UserSidebar() {
   }, []);
 
   return (
-    <div className="max-w-[20rem] w-full h-screen flex flex-col border-r border-r-white/10">
+    <div className="max-w-[20rem] w-full h-screen flex flex-col border-r border-r-white/10 bg-[#101010]">
       <h1 className="bg-black rounded-lg mt-3 mx-3 px-2 py-1 text-[#7480ff] text-xl font-semibold">
         THE CHAT
       </h1>
@@ -64,17 +65,8 @@ function UserSidebar() {
         })}
       </div>
 
-      <div className="flex items-center justify-between p-3 border-t border-t-white/10">
-        <div className="avatar flex items-center gap-4 text-sm">
-          <div className="w-10 rounded-4xl flex">
-            <img src={userProfile?.profile} />
-          </div>
-          <h2>{userProfile?.username}</h2>
-        </div>
-        <button onClick={handleLogout} className="btn btn-primary btn-sm px-4">
-          logout
-        </button>
-      </div>
+      <ProfilePopUp />
+
     </div>
   );
 }
