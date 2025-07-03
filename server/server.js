@@ -17,14 +17,9 @@ const PORT = process.env.PORT || 5000;
 
 // routes
 import userRoute from './routes/userRoute.js'
-import messageRoute from './routes/messageRoute.js'
-app.use('/api/v1/user', userRoute); // Every route in userRoute.js will be prefixed with /api/v1/user
-app.use('/api/v1/message', messageRoute); // Every route in messageRoute.js will be prefixed with /api/v1/message
+app.use('/user', userRoute)   // This line mounts the entire router userRoute at the path /api/v1/user, or we can say that it is creating the actual route
 
-// middlewares 
-import { errorMiddleware } from './middlewares/errorMiddleware.js'
-app.use(errorMiddleware);
-
-server.listen(PORT, ()=>{
-    console.log(`$erver is running on port ${PORT}`)
-});
+app.listen(PORT, ()=>{
+    console.log(`your server lisening at port ${PORT}`);
+})
+    
