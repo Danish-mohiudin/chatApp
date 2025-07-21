@@ -31,9 +31,9 @@ function Login() {
   // console.log(loginData); // will display username and password
 
   const handleLogin = async () => {
-    toast.success('Logged in successfully!', { duration: 2000 });
     const response = await dispatch(loginUserThunk(loginData))
     if(response?.payload?.success){
+      toast.success('Logged in successfully!', { duration: 2000 });
       navigate(`/`)
     }
   }
