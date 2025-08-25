@@ -20,8 +20,8 @@ const MessageContainer = () => {
   return (
     <>
       {!selectedUser ? (
-        <div className="w-full flex items-center justify-center flex-col gap-5 bg-[#1f1e1e]">
-          <h2>Welcome to THE CHAT</h2>
+        <div className="w-full flex items-center justify-center flex-col gap-5">
+          <h2>Welcome to GUP SHUP</h2>
           <p className="text-xl">Please select a person to continue your chat!!</p>
           </div>
       ) : (
@@ -30,7 +30,7 @@ const MessageContainer = () => {
             <User userDetails={selectedUser} />
           </div>
 
-          <div className="h-full overflow-y-auto p-3 bg-[#111010]">
+          <div className="h-full overflow-y-auto p-3">
             {messages?.map((messageDetails) => {
               return (
                 <Message
@@ -40,7 +40,7 @@ const MessageContainer = () => {
               );
             })}
           </div>
-            {/* input field */}
+
           <SendMessage />
 
         </div>

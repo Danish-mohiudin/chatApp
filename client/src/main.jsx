@@ -9,6 +9,7 @@ import ProfilePopup from "./pages/home/ProfilePopUp.jsx";
 import { store } from "./store/store.js";
 import { Provider } from "react-redux";
 import ProtectedRoute from "../components/ProtectedRoutes.jsx";
+import Loader from "./pages/home/Loader.jsx";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
   {
     path: "/Myprofile",
     element: <ProfilePopup />,
+  },
+  {
+    path: "/loader",
+    element: <Loader />,
   },
 ]);
 

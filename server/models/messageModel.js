@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 
-const messageSchema = new mongoose.Schema({ //to define what each message document in MongoDB will look like.A schema defines the structure and data types for a document in a MongoDB collection (in this case, for a message).
+const messageSchema = new mongoose.Schema({
     senderId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        type: mongoose.Schema.Types.ObjectId, // this field will store a MongoDB ObjectId (the unique ID Mongo gives each document).
+        ref: 'User', // this tells Mongoose that the ObjectId belongs to the User model/collection, 👉 so this is how you link one collection to another (a relation).
         required: true,
     },
     recieverId: {

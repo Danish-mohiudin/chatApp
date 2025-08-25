@@ -6,7 +6,7 @@ import { getSocketId, io } from '../socket/socket.js' // Import socket.io-client
 
 export const sendMessage = asyncHandler(async (req, res, next) => {
     const senderId = req.user._id;
-    const recieverId = req.params.recieverId;
+    const recieverId = req.params.recieverId; // router.post('/send/:recieverId',isAuthenticated, sendMessage); 
     const message = req.body.message;
 
     if(!senderId || !recieverId || !message) {
@@ -14,7 +14,7 @@ export const sendMessage = asyncHandler(async (req, res, next) => {
     }
     
     let conversation = await Conversation.findOne(
-        { participants: { $all: [senderId, recieverId] } },  // $all means both senderId and receiverId should be present in the participants array
+        { participants: { $all: [senderId, recieverId] } },  // $all means both senderId and receiverId both should be present in the participants array
     );
 
     if(!conversation) {
@@ -37,9 +37,8 @@ export const sendMessage = asyncHandler(async (req, res, next) => {
     //socket.io broadcasting code here
     const socketId  = getSocketId(recieverId) 
     io.to(socketId).emit('newMessage', newMessage);
-    res
-    .status(200)
-    .json({
+
+    res.status(200).json({
       success: true,
       responseData : newMessage,
     });
@@ -58,10 +57,8 @@ export const getMessages = asyncHandler(async (req, res, next) => {
     ).populate('messages')
     
 
-    res
-    .status(200)
-    .json({
+    res.status(200).json({
       success: true,
       responseData : conversation,
     });
-  })
+});

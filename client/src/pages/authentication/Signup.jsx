@@ -35,6 +35,7 @@ function Signup() {
     if(signupData.password!== signupData.confirmPassword){
       return toast.error('Passwords do not match!')
     }
+    console.log(signupData)
     const response = await diapatch(registerUserThunk(signupData));
     if(response?.payload?.success){
       navigate('/');

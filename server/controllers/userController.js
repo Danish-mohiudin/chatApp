@@ -25,8 +25,8 @@ export const register = asyncHandler(async (req, res, next) => { // will recieva
     const profilePicture = `https://avatar.iran.liara.run/public/${profileType}?username=${username}`
 
     const newUser = await User.create({ 
-      fullName, 
       username, 
+      fullName, 
       password: hashedPassword, 
       gender,
       profilePicture,

@@ -29,25 +29,3 @@ export const socketSlice = createSlice({
 export const { initializeSocket, setOnlineUsers } = socketSlice.actions;
 
 export default socketSlice.reducer;
-
-
-
-
-/*
-✅ Why Create a Slice for Socket?
-In Redux, a slice is a way to organize part of your global app state and logic together.
-Here, you are managing socket connection and related real-time data (like online users) using Redux.
-
-Creating a socketSlice allows you to:
-Keep the socket connection available across your app.
-Control the socket lifecycle (e.g., when to connect).
-Access the socket instance from anywhere using Redux state.
-Manage related data like onlineUsers (people currently online).
-
-
-
-✅ Summary 
-You made a Redux slice to manage the socket connection in a clean and centralized way.
-When initializeSocket() is called, it connects to your backend via Socket.IO and saves that connection in your Redux state.
-Later, you can access or use this socket anywhere in your app by reading it from the Redux store.
-*/

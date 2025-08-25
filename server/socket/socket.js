@@ -29,9 +29,7 @@ io.on('connection',(socket)=>{
     socket.on('disconnect',()=>{
         delete userSocketMap[userId];
         io.emit('onlineUsers',Object.keys(userSocketMap));
-    });
-
-    
+    });    
 });
 
 const getSocketId = (userId) => {

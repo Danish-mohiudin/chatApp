@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 
 export const isAuthenticated = asyncHandler(async(req, res, next) => {
     const token = req.cookies.token || req.headers['authorization']?.replace("Bearer ", ""); // It first checks for the token in cookies: req.cookies.token, If not there, it checks the Authorization header:
+    //console.log("and here the token is ",token)
     if(!token) {
         return next(new errorHandler("Not authorized, token required", 401));
     }
