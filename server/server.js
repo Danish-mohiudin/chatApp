@@ -26,6 +26,10 @@ app.use('/api/v1/message', messageRoute)
 import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 app.use(errorMiddleware);
 
+app.get("/", (req, res) => {
+  res.send("✅ Server is running!");
+});
+
 const PORT = process.env.PORT || 5000;
 server.listen(PORT,"0.0.0.0", ()=>{
     console.log(`🚀 Server listening at port ${PORT}`);
