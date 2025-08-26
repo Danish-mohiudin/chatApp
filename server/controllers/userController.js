@@ -6,6 +6,7 @@ import { errorHandler } from '../utilities/errorHandlerUtility.js'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
+// /api/v1/user/register
 export const register = asyncHandler(async (req, res, next) => { // will recieva data from registerUserThunk 
     const { fullName, username, password, gender} = req.body;
     
@@ -58,7 +59,7 @@ export const register = asyncHandler(async (req, res, next) => { // will recieva
     });
   });
 
-
+// /api/v1/user/login
 export const login = asyncHandler(async (req, res, next) => {
     const { username, password} = req.body;
     
