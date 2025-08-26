@@ -15,7 +15,6 @@ app.use(
 app.use(express.json());
 app.use(cookieParser ());
 //app.use(express.urlencoded({ extended: true }));
-const PORT = process.env.PORT || 5000;
 
 // routes
 import userRoute from './routes/userRoute.js';
@@ -26,7 +25,9 @@ app.use('/api/v1/message', messageRoute)
 // Error middleware
 import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 app.use(errorMiddleware);
+
+const PORT = process.env.PORT || 5000;
 server.listen(PORT, ()=>{
-    console.log(`your server lisening at port http://localhost:${PORT}`);
+    console.log(`🚀 Server listening at port ${PORT}`);
 });
     
