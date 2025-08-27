@@ -71,10 +71,20 @@ export const getUserProfileThunk = createAsyncThunk(
 });
 
 export const getOtherUsersThunk = createAsyncThunk(
-    "user/getOtherUsers", async(_,{rejectWithValue}) => {
+    "user/getOtherUsers", 
+    async(_,{rejectWithValue}) => {
     try {
         const response = await axiosInstance.get('/user/get-other-users');
-        return response.data
+        // normalize responseData before returning
+      const cleanedUsers = (response.data?.responseData || []).map((user) => ({
+        ...user,
+        username: user?.username || "",
+        fullName: user?.fullName || "",
+      }));
+        return {
+            ...response.data,
+            responseData: cleanedUsers,
+        }
     } catch (error) {   
         console.error(error?.response?.data?.errMessage);
         const errorOutput = error?.response?.data?.errMessage
