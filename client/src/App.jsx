@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import {Toaster} from 'react-hot-toast'
 import { useDispatch, useSelector  } from 'react-redux';
-import { getUserProfileThunk, getOtherUsersThunk  } from './store/slice/user/userThunk';
+import { getUserProfileThunk } from './store/slice/user/userThunk';
 import useAxiosLoader from '../hooks/useAxiosLoader.js';
 import Loader from './pages/home/Loader.jsx';
 function App() {
@@ -10,13 +10,9 @@ function App() {
   const loading = useSelector((state) => state.loaderReducer.loading);
   useAxiosLoader();
 
-  useEffect(() => {
-    (async () => {
-      const res = await dispatch(getUserProfileThunk());
-      if (res.meta.requestStatus === "fulfilled") {
-        // ✅ fetch other users only when profile fetch succeeds
-        dispatch(getOtherUsersThunk());
-      }
+  useEffect(()=>{
+    (async ()=> {
+      await dispatch(getUserProfileThunk());
     })();
   }, [dispatch]);
   

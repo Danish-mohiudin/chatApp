@@ -5,7 +5,7 @@ const initialState = {
     isAuthenticated:false,
     screenLoading: true,
     userProfile: null,
-    otherUsers: [],
+    otherUsers: null,
     selectedUser: JSON.parse(localStorage.getItem("selectedUser")),
     buttonLoading: false,
 }
@@ -79,9 +79,7 @@ export const userSlice = createSlice({
         });
         builder.addCase(getOtherUsersThunk.fulfilled, (state, action)=>{
             state.screenLoading = false;
-            state.otherUsers = Array.isArray(action.payload.responseData)
-                ? action.payload.responseData
-                : [];
+            state.otherUsers = action.payload.responseData;
         });
         builder.addCase(getOtherUsersThunk.rejected, (state, action)=>{
             state.screenLoading = false
