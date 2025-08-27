@@ -21,8 +21,9 @@ function UserSidebar() {
   };
 
   useEffect(() => {
+    const list = Array.isArray(otherUsers) ? otherUsers : [];
     if (!searchValue) {
-      setUsers(otherUsers || []);
+      setUsers(list);
     } else {
       setUsers(
         otherUsers.filter((user) => {
