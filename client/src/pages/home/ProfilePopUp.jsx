@@ -8,8 +8,8 @@ function profilePopUp() {
   const {userProfile } = useSelector((state) => state.userReducer);
 
   const handleLogout = async () => {
-      await dispatch(logoutUserThunk());
-    };
+    await dispatch(logoutUserThunk());
+  };
 
   return (
      <div>

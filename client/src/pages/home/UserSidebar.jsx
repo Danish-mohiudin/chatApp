@@ -16,10 +16,6 @@ function UserSidebar() {
   const { otherUsers, userProfile } = useSelector((state) => state.userReducer);
   //console.log(userProfile);
 
-  const handleLogout = async () => {
-    await dispatch(logoutUserThunk());
-  };
-
   useEffect(() => {
     if (!searchValue) {
       setUsers(otherUsers || []);
