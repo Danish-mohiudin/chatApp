@@ -75,6 +75,7 @@ export const getOtherUsersThunk = createAsyncThunk(
     async(_,{rejectWithValue}) => {
     try {
         const response = await axiosInstance.get('/user/get-other-users');
+        console.log("getOtherUsers response:", response.data);
         // normalize responseData before returning
       const cleanedUsers = (response.data?.responseData || []).map((user) => ({
         ...user,
