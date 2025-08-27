@@ -33,7 +33,7 @@ function UserSidebar() {
         })
       );
     }
-  }, [searchValue]);
+  }, [searchValue, otherUsers]);
 
   useEffect(() => {
     (async () => {
