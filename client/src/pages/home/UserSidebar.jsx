@@ -22,7 +22,7 @@ function UserSidebar() {
 
   useEffect(() => {
     if (!searchValue) {
-      setUsers(otherUsers);
+      setUsers(otherUsers || []);
     } else {
       setUsers(
         otherUsers.filter((user) => {
