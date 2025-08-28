@@ -36,15 +36,15 @@ export const register = asyncHandler(async (req, res, next) => { // will recieva
     const tokenData = {
       _id: newUser?._id, // Optional chaining ensures no crash if newUser is undefined
     };
-    const token = jwt.sign(tokenData, process.env.jwt_SECRET, { 
-      expiresIn: process.env.jwt_EXPIRES
+    const token = jwt.sign(tokenData, process.env.JWT_SECRET, { 
+      expiresIn: process.env.JWT_EXPIRES
     });
 
     res
     .status(200)
     .cookie("token",token, { 
       expires: new Date(
-        Date.now() + process.env.COOKIE_EXPIRES * 24 * 60 * 60 * 1000
+        Date.now() + Number(process.env.COOKIE_EXPIRES) * 24 * 60 * 60 * 1000
       ), // 2 days
       httpOnly: true,
       secure: true,
@@ -83,8 +83,8 @@ export const login = asyncHandler(async (req, res, next) => {
     const tokenData = {
       _id: user?._id,
     };
-    const token = jwt.sign(tokenData, process.env.jwt_SECRET, { 
-      expiresIn: process.env.jwt_EXPIRES
+    const token = jwt.sign(tokenData, process.env.JWT_SECRET, { 
+      expiresIn: process.env.JWT_EXPIRES
     });
 
 
@@ -92,7 +92,7 @@ export const login = asyncHandler(async (req, res, next) => {
     .status(200)
     .cookie("token",token, { 
       expires: new Date(
-        Date.now() + process.env.COOKIE_EXPIRES * 24 * 60 * 60 * 1000
+        Date.now() + Number(process.env.COOKIE_EXPIRES) * 24 * 60 * 60 * 1000
       ), 
       httpOnly: true,
       secure: true,
@@ -128,6 +128,8 @@ export const logout = asyncHandler(async (req, res, next) => {
     .cookie("token","", { 
       expires: new Date(Date.now()),
       httpOnly: true,
+      secure: true,
+      sameSite: "None"
     })
     .json({
       success: true,
