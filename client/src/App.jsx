@@ -6,7 +6,6 @@ import useAxiosLoader from '../hooks/useAxiosLoader.js';
 import Loader from './pages/home/Loader.jsx';
 function App() {
   const dispatch = useDispatch();
-  //const loading = useSelector((state) => state.loader.loading);
   const loading = useSelector((state) => state.loaderReducer.loading);
   useAxiosLoader();
 

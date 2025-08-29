@@ -4,13 +4,13 @@ import { useNavigate } from "react-router-dom";
 
 
 const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated , screenLoading} = useSelector(
-    (state) => state.userReducer);
+  const { isAuthenticated } = useSelector((state) => state.userReducer);
+  const loading = useSelector((state) => state.loaderReducer.loading);
   const navigate = useNavigate();
   
   useEffect(()=>{
-    if(!screenLoading && !isAuthenticated) navigate('/login');
-  },[isAuthenticated, screenLoading]);
+    if(!loading && !isAuthenticated) navigate('/login');
+  },[isAuthenticated, loading]);
   
   return children;
 }

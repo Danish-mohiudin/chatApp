@@ -23,14 +23,15 @@ export const register = asyncHandler(async (req, res, next) => { // will recieva
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const profileType = gender === 'male'? 'boy' : 'girl';
-    const profilePicture = `https://avatar.iran.liara.run/public/${profileType}?username=${username}`
+    const profile = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(fullName)}`
+    console.log("profilePicture before saving:", profile);
 
     const newUser = await User.create({ 
       username, 
       fullName, 
       password: hashedPassword, 
       gender,
-      profilePicture,
+      profile,
     });
 
     const tokenData = {

@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const Loader = () => {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+    <div className="flex items-center justify-center min-h-screen bg-black fixed inset-0 bg-opacity-40 z-50">
       <div className="flex space-x-2">
         {[0, 1, 2].map((i) => (
           <motion.span
