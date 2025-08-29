@@ -2,12 +2,13 @@ import MessageContainer from './MessageContainer'
 import UserSidebar from './UserSidebar'
 //import ProfilePopUp from './ProfilePopUp'
 import { useSelector, useDispatch } from 'react-redux'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { initializeSocket , setOnlineUsers} from '../../store/slice/socket/socketSlice'
 import { setNewMessage } from '../../store/slice/message/messageSlice'
 const Home = () => {
 
   const {isAuthenticated, userProfile} = useSelector((state) => state.userReducer);
+  const [open, setOpen] = useState(false)
   const dispatch = useDispatch();
 
   useEffect(()=>{
@@ -33,11 +34,18 @@ const Home = () => {
 
 
   return (
-    <div className='flex '>
-      {/* <ProfilePopUp /> */}
+    <>
+    <div className='hidden sm:flex '>
       <UserSidebar />
       <MessageContainer />
     </div>
+
+    {/* for mobile  */}
+    <div className='flex'>
+      <UserSidebar />
+      {/* <MessageContainer /> */}
+    </div>
+    </>
   )
 }
 

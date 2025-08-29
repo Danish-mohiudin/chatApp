@@ -10,6 +10,7 @@ import { store } from "./store/store.js";
 import { Provider } from "react-redux";
 import ProtectedRoute from "../components/ProtectedRoutes.jsx";
 import Loader from "./pages/home/Loader.jsx";
+import MessageContainer from "./pages/home/MessageContainer.jsx";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
     path: "/loader",
     element: <Loader />,
   },
+  {
+    path: "/message-container",
+    element: <MessageContainer />,
+  }
 ]);
 
 createRoot(document.getElementById("root")).render(

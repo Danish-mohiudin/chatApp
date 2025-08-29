@@ -1,10 +1,12 @@
 import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { setSelectedUser } from '../../store/slice/user/userSlice'
+import {useNavigate } from 'react-router-dom';
 
 function User({userDetails}) {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const { selectedUser } = useSelector((state) => state.userReducer)
   const {onlineUsers} = useSelector((state) => state.userReducer)
   const isUserOnline = onlineUsers?.includes(userDetails?._id)
@@ -14,6 +16,10 @@ function User({userDetails}) {
 
   const handleUserClick = () => {
     dispatch(setSelectedUser(userDetails))
+
+    if (window.innerWidth < 768) {
+      navigate('message-container')
+    }
   };
 
   // selected user
