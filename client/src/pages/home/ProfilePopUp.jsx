@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import {logoutUserThunk} from "../../store/slice/user/userThunk";
+import {logoutUserThunk, deleteAccountThunk} from "../../store/slice/user/userThunk";
+import DeleteAccount from './DeleteAccount';
 
 function profilePopUp() {
   const [open, setOpen] = useState(false);
@@ -10,6 +11,7 @@ function profilePopUp() {
   const handleLogout = async () => {
     await dispatch(logoutUserThunk());
   };
+
 
   return (
      <div>
@@ -49,11 +51,14 @@ function profilePopUp() {
             <p className="text-sm mb-6">{userProfile?.username}</p>
             <button
               onClick={() => setOpen(false)}
-              className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded w-full"
+              className="bg-blue-500 hover:bg-blue-800 text-white py-2 px-4 rounded w-full"
             >
               close
             </button>
-            <p className='text-sm mt-4'>Edit Option will be availabe soon...</p>
+            {/* <button className='bg-red-500 hover:bg-red-800 text-white py-2 px-4 rounded w-full mt-2'>Delete my Account</button> */}
+            <div className='py-2 px-4'>
+            <DeleteAccount/>
+            </div>
           </div>
         </div>
       </div>

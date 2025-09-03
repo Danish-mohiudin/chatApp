@@ -1,5 +1,5 @@
 import express from 'express'
-import { getOtherUsers, getProfile, login, logout, register } from '../controllers/userController.js';
+import { deleteAccount, getOtherUsers, getProfile, login, logout, register } from '../controllers/userController.js';
 import { isAuthenticated } from '../middlewares/authMiddleware.js'
 
 
@@ -10,5 +10,6 @@ router.post('/login', login);
 router.post('/logout', isAuthenticated, logout); // It first calls the isAuthenticated middleware.If isAuthenticated, calls next(), then it proceeds to call the logout handler.
 router.get('/get-profile', isAuthenticated, getProfile);
 router.get('/get-other-users', isAuthenticated, getOtherUsers);
+router.delete('/deleteAccount', isAuthenticated, deleteAccount);
 
 export default router;

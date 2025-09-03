@@ -150,6 +150,32 @@ export const getOtherUsers = asyncHandler(async (req, res, next) => {
       responseData: otherUsers,
     });
     
-  })
+})
+
+// delete account
+
+export const deleteAccount = asyncHandler(async (req, res, next) => {
+  try {
+    const userId = req.user._id;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return next(errorHandler(404, "User not found"));
+    }
+
+    await User.findByIdAndDelete(userId);
+
+    // optionally, clear cookie if using httpOnly cookies
+    res.clearCookie("token");
+
+    res.status(200).json({
+      success: true,
+      message: "Account deleted successfully",
+    });
+  } catch (err) {
+    return next(errorHandler(500, "Error deleting account"));
+  }
+});
 
 

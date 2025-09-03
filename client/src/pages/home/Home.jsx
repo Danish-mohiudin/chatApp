@@ -41,7 +41,7 @@ const Home = () => {
     </div>
 
     {/* for mobile  */}
-    <div className='flex'>
+    <div className='flex sm:hidden'>
       <UserSidebar />
       {/* <MessageContainer /> */}
     </div>

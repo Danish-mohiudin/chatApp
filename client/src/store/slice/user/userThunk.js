@@ -83,3 +83,19 @@ export const getOtherUsersThunk = createAsyncThunk(
     }
     
 });
+
+// delete account thunk 
+
+export const deleteAccountThunk = createAsyncThunk(
+  "user/deleteAccount",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.delete('/user/deleteAccount');
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Error deleting account"
+      );
+    }
+  }
+);

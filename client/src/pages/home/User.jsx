@@ -8,9 +8,9 @@ function User({userDetails}) {
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const { selectedUser } = useSelector((state) => state.userReducer)
-  const {onlineUsers} = useSelector((state) => state.userReducer)
+  const {onlineUsers} = useSelector((state) => state.socketReducer)
+  
   const isUserOnline = onlineUsers?.includes(userDetails?._id)
-  //console.log(`${userDetails} userDetails`);
   
   
 
@@ -24,19 +24,28 @@ function User({userDetails}) {
 
   // selected user
   return (
-    <div onClick={handleUserClick} className={`flex gap-5 items-center hover:bg-gray-700 rounded-lg py-1 px-2 cursor-pointer
+    <div
+    onClick={handleUserClick}
+    className={`flex gap-5 items-center hover:bg-gray-700 rounded-lg py-1 px-2 cursor-pointer
     ${userDetails?._id === selectedUser?._id && 'bg-gray-700'}`}
-    >
-        <div className={`avatar ${isUserOnline && 'online'} `}>
-          <div className="w-12 rounded-full">
-            <img src={userDetails?.profile} />
-          </div>
-        </div>
-        <div>
-            <h2 className='line-clamp-1'>{userDetails?.fullName}</h2>
-            <p className='text-xs'>{userDetails?.username}</p>
-        </div>
+  >
+    <div className="relative w-12 h-12 rounded-full">
+      <img
+        src={userDetails?.profile}
+        alt={userDetails?.fullName}
+        className="w-full h-full object-cover"
+      />
+
+      {isUserOnline && (
+        <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></span>
+      )}
     </div>
+
+    <div>
+      <h2 className="line-clamp-1">{userDetails?.fullName}</h2>
+      <p className="text-xs">{userDetails?.username}</p>
+    </div>
+  </div>
   )
 }
 
