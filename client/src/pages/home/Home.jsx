@@ -1,52 +1,63 @@
 import MessageContainer from './MessageContainer'
 import UserSidebar from './UserSidebar'
-//import ProfilePopUp from './ProfilePopUp'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { initializeSocket , setOnlineUsers} from '../../store/slice/socket/socketSlice'
+import { initializeSocket, setOnlineUsers } from '../../store/slice/socket/socketSlice'
 import { setNewMessage } from '../../store/slice/message/messageSlice'
-const Home = () => {
+import { moveUserToTop } from '../../store/slice/user/userSlice'
 
-  const {isAuthenticated, userProfile} = useSelector((state) => state.userReducer);
-  const [open, setOpen] = useState(false)
+const Home = () => {
+  const { isAuthenticated, userProfile } = useSelector((state) => state.userReducer);
+  const { socket } = useSelector((state) => state.socketReducer);
+  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
 
-  useEffect(()=>{
-    if(!isAuthenticated) return;
-    dispatch(initializeSocket(userProfile?._id)); // create socket connection when user is authenticated
-  },[isAuthenticated])
+  // ✅ Initialize socket on login
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    dispatch(initializeSocket(userProfile?._id));
+  }, [isAuthenticated, userProfile, dispatch]);
 
+  // ✅ Socket listeners
+  useEffect(() => {
+    if (!socket) return;
 
-  const {socket} = useSelector(state => state.socketReducer);
-
-  useEffect(()=>{
-    if(!socket) return;
     socket.on("onlineUsers", (onlineUsers) => {
-        dispatch(setOnlineUsers(onlineUsers));
-      });
-      socket.on("newMessage", (newMessage) => {
-        dispatch(setNewMessage(newMessage));
-      });
-      return () => {
-        socket.close(); // clean up when component unmounts
-      }
-  },[socket])
+      dispatch(setOnlineUsers(onlineUsers));
+    });
 
+    socket.on("newMessage", (newMessage) => {
+      dispatch(setNewMessage(newMessage));
+
+      // ✅ figure out the "other user" in the conversation
+      const otherUserId =
+        newMessage.senderId === userProfile._id
+          ? newMessage.recieverId
+          : newMessage.senderId;
+
+      dispatch(moveUserToTop(otherUserId));
+    });
+
+    return () => {
+      socket.off("onlineUsers");
+      socket.off("newMessage");
+    };
+  }, [socket, dispatch, userProfile]);
 
   return (
     <>
-    <div className='hidden sm:flex '>
-      <UserSidebar />
-      <MessageContainer />
-    </div>
+      <div className="hidden sm:flex">
+        <UserSidebar />
+        <MessageContainer />
+      </div>
 
-    {/* for mobile  */}
-    <div className='flex sm:hidden'>
-      <UserSidebar />
-      {/* <MessageContainer /> */}
-    </div>
+      {/* Mobile */}
+      <div className="flex sm:hidden">
+        <UserSidebar />
+        {/* <MessageContainer /> */}
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

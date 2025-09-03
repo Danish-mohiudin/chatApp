@@ -28,6 +28,13 @@ export const userSlice = createSlice({
       localStorage.setItem("selectedUser", JSON.stringify(action.payload));
       state.selectedUser = action.payload;
     },
+    moveUserToTop: (state, action) => {
+  const userId = action.payload;
+  const index = state.otherUsers.findIndex((u) => u._id === userId);
+  if (index === -1) return; // user not found
+  const [user] = state.otherUsers.splice(index, 1);
+  state.otherUsers.unshift(user); // put at top
+    },
     clearUserState: (state) => {
       state.userProfile = null;
       state.otherUsers = null;
@@ -119,5 +126,5 @@ export const userSlice = createSlice({
   }
 });
 
-export const { setSelectedUser, clearUserState, logout } = userSlice.actions;
+export const { setSelectedUser, clearUserState, logout, moveUserToTop  } = userSlice.actions;
 export default userSlice.reducer;
