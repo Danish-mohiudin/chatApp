@@ -1,5 +1,5 @@
 import Message from '../models/messageModel.js'
-import Conversation from '../models/conversarionModel.js'
+import Conversation from '../models/conversationModel.js'
 import { asyncHandler } from '../utilities/asyncHandlerUtility.js';
 import { errorHandler } from '../utilities/errorHandlerUtility.js'
 import { getSocketId, io } from '../socket/socket.js' // Import socket.io-client'
